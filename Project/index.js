@@ -1,30 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const mysql = require("mysql2");
 const port = 8089;
 const http = require("https");
-
+const firebase = require("firebase-admin");
+const serviceAccount = require("./serviceAccountKey.json");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password123",
-  database: "sit_project",
-  multipleStatements: true
-});
-// connect to database
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("Connected to database");
+const firebaseApp = firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+  databaseURL: "https://moodly-9fa79-default-rtdb.asia-southeast1.firebasedatabase.app/"
 });
 
-global.db = db;
+global.db = firebaseApp.database();
 
 require("./routes/main")(app);
 app.set("views", __dirname + "/views");
