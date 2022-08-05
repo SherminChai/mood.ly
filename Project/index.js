@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const port = 8089;
-const http = require("https");
 const firebase = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 
