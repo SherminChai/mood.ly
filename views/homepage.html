@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+          <img src="Images/logo.png" class="logo">
+          <p>Mood.ly</p>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="mood-tracker.html">Mood Tracker</a></li>
+              <li><a href="journal.html">Journal</a></li>
+              <li><a href="forums.html">Forum</a></li>
+              <li><a href="tips.html">Tips</a></li>
+              <button class="register">Register</button>
+              <button class="login">Log In</button>
+            </ul>
+          </nav>
+        </div>
+    </header>
+ 
+    <div class="homepage_carousel">
+        <div class="mySlides fade">
+            <img src="/assets/quote.1.png">
+        </div>
+        
+        <div class="mySlides fade">
+            <img src="/assets/quote.2.png">
+        </div>
+        
+        <div class="mySlides fade">
+            <img src="/assets/quote.3.png">
+        </div>
+
+        <div class="mySlides fade">
+            <img src="/assets/hotline.1.png">
+        </div>
+        <br>
+        <div style="text-align: center">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <p class="heading">Tips : Scroll to find more!</p>
+    <div class ="homepage_tips">
+        <% if(tipsData.length > 0) { %> <% tipsData.forEach(function(tips){ %>
+        <div class="tips">
+            <p class="tipsTitle"><%= tips.title %></p>
+            <p class="'tipsIntro"><%= tips.intro %></p>
+        </div>
+        <% }) %> <% } %>
+        
+    </div>
+    <br>
+    <p class="heading">Forum : Scroll to find more!</p>
+    <div class ="homepage_forum">
+        <div class="forum">
+            <h5>Sed ut perspiciatis</h5>
+            <h6>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</h6>
+        </div>
+    </div>
+
+<script src="/js/homepage.js"></script>
+</body>
+
+</html>
