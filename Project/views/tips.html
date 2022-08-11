@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Moodly - Tips</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-md navbar-light sticky-top bg-white">
+            <div class="container-xxl">
+                <a href="/" class="navbar-brand">
+                    <span class="fw-bold">Moodly</span>
+                </a>
+               
+                <!-- toggle button for mobile nav -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- navbar links -->
+                <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/journal" class="nav-link">Journal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/mood_tracker" class="nav-link">Mood Tracker</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/tips" class="nav-link">Tips</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- intro -->
+        <section id="intro">
+             <div class="container-lg">
+                <div class="row justify-content-start align-items-end">
+                    <!-- intro text -->
+                    <div class="col-md-4 text-center text-md-start">
+                        <h1>
+                            <div class="display-2">Tips</div>
+                            <div class="display-5 text-muted">To Help Improve Your Mental Health</div>
+                            <p class="lead my-4 text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        </h1>
+                    </div>
+
+                    <!-- dropdown -->
+                    <div class="col-md-4 text-center text-md-end">
+                        <div class="dropdown my-3">
+                            <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">By Latest</button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Popular</a></li>
+                              <li><a class="dropdown-item" href="#">Most Viewed</a></li>
+                              <li><a class="dropdown-item" href="#">A-Z</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- search bar -->
+                    <div class="col-md-4 text-center text-md-start">
+                        <form class="d-flex my-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-secondary" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+        <!-- tips -->
+        <section id="tips">
+            <div class="container-lg">
+                
+                <% if(tipsData.length > 0) { %>
+                    <% tipsData.forEach(function(tips){ %>
+                        <div class="card mb-3 shadow" >
+                            <div class="row g-0 align-items-center">
+                                <!-- image -->
+                                <div class="col-md-4 text-center text-md-start">
+                                    <img src=<%= tips.image %> class="img-fluid rounded" alt="Placeholder">
+                                </div>
+
+                                <!-- text -->
+                                <div class="col-md-6 text-center text-md-start">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= tips.title %></h5>
+                                        <p class="card-text"><%= tips.intro %></p>
+                                        <p class="card-text"><small class="text-muted"><%= tips.author %></small></p>
+                                    </div>
+                                </div>
+
+                                <!-- link -->
+                                <div class="col-md-2 text-center text-md-start">
+                                    <a class="btn btn-primary" href=<%= tips.link %> role="button">Learn more</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+        </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    </body>
+</html>
