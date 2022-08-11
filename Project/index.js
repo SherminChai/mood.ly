@@ -1,12 +1,21 @@
+const cookieParser = require("cookie-parser");
+const csrf = require("csurf");
 const express = require("express");
 const bodyParser = require("body-parser");
+var path = require('path');
 const app = express();
 const port = 8089;
-const http = require("https");
 const firebase = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 
+const csrfMiddleware = csrf({ cookie: true });
+
+app.use(cookieParser());
+app.use(csrfMiddleware);;
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(express.static(__dirname + '/public'));
+// app.use(express.static(path.join(__dirname + '/public')));
 
 const firebaseApp = firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
