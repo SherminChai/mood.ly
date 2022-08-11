@@ -7,7 +7,7 @@ module.exports = function (app) {
   var signUpRef = firebaseRef.child("sign-up");
   var signInRef = firebaseRef.child("sign-in");
 
-  var DateUtil = require("js/dateUtil.js");
+  var DateUtil = require("./util/dateUtil.js");
   var dateUtil = new DateUtil();
 
   var tipsRef = firebaseRef.child("tips");
