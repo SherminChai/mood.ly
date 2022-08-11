@@ -15,7 +15,8 @@ app.use(csrfMiddleware);;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
-// app.use(express.static(path.join(__dirname + '/public')));
+var path = require("path");
+app.use(express.static(path.join(__dirname, "public")));
 
 const firebaseApp = firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
