@@ -11,6 +11,7 @@ module.exports = function (app) {
   var DateUtil = require("./util/dateUtil.js");
   var dateUtil = new DateUtil();
 
+  var tipsRef = firebaseRef.child("tips");
 
   app.get("/", function (req, res) {
     
@@ -263,4 +264,19 @@ app.get("/sessionLogout", (req, res) => {
   res.redirect("/signIn");
 });
 
+app.get("/tips", function (req, res) {
+
+    tipsRef.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        var tips = snapshot.val();
+        console.log(tips);
+        res.render("tips.html", {tipsData: tips});
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  });
+  
 }
