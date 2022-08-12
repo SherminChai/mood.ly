@@ -25,10 +25,6 @@
         $("#nav-placeholder").load("./topNav");
     });
 
-    $(function () {
-        $("#forum-nav-placeholder").load("./forumNav");
-    });
-
     var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
     var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
         return new bootstrap.Dropdown(dropdownToggleEl)
@@ -38,36 +34,10 @@
 
 <body>
 <div id="nav-placeholder"></div>
-<h1>Daily Mood Tracker</h1>
+<!-- <h1>Daily Mood Tracker</h1> -->
 
 </br>
 <div>
-    <% console.log(today_mood)%>
-    <span><%= today_mood %></span>
-    <div class="card">
-        <div class="card-header">
-            How do you feel today?
-        </div>
-        <div class="card-body" style="justify-content: center; align-items: center;">
-            <div class="moodPack" style="justify-content: center; align-items: center;">
-                <a href="/happy" >
-                    <i class="bi bi-emoji-smile-fill" style="color: rgb(89, 204, 66);font-size: 5rem; "></i>
-                </a>
-                <a href="/cool">
-                    <i class="bi bi-emoji-sunglasses-fill" style="color: rgb(66, 204, 186); font-size: 5rem;"></i>
-                </a>
-                <a href="/neutral">
-                    <i class="bi bi-emoji-neutral-fill" style="color: rgb(204, 190, 66); font-size: 5rem;"></i>
-                </a>
-                <a href="/mad">
-                    <i class="bi bi-emoji-angry-fill" style="color: rgb(204, 66, 66); font-size: 5rem;"></i>
-                </a>
-                <a href="/sad">
-                    <i class="bi bi-emoji-frown-fill" style="color: rgb(66, 110, 204); font-size: 5rem;"></i>
-                </a>
-            </div>     
-        </div>
-    </div>
     <div class="card">
     
         <div class="calendar">
@@ -76,7 +46,9 @@
                 <div class="date">
                     <h1></h1>
                     <p></p>
+                    <span>**Click on the date to add the mood**</span>
                 </div>
+                
                 <i class="fas fa-angle-right next"></i>
             </div>
             <div class="weekdays">
@@ -88,10 +60,45 @@
                 <div>Fri</div>
                 <div>Sat</div>
             </div>
-            <div class="days"></div>
+            <div class="days" ></div>
         </div>
     </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+      
+            <div class="card" style="width: fit-content;">
+                <div class="card-header" >
+                    <h4 style="justify-content: center; display:flex" >How do you feel today?</h4>
+                    <span style="justify-content: center; display:flex">select a mood</span>
+                </div>
+                <div class="card-body" style="justify-content: center; align-items: center;">
+                    <div class="moodPack" style="justify-content: center; display:flex">
+                        <a href="/happy" style="padding:15px;">
+                            <i class="bi bi-emoji-smile-fill" style="color: rgb(155, 201, 135);font-size: 5rem; "></i>
+                        </a>
+                        <a href="/cool" style="padding:15px;">
+                            <i class="bi bi-emoji-sunglasses-fill" style="color: rgb(135, 201, 201); font-size: 5rem;"></i>
+                        </a>
+                        <a href="/neutral" style="padding:15px;">
+                            <i class="bi bi-emoji-neutral-fill" style="color: rgb(253, 229, 94); font-size: 5rem;"></i>
+                        </a>
+                        <a href="/mad" style="padding:15px;">
+                            <i class="bi bi-emoji-angry-fill" style="color: rgb(186, 86, 86); font-size: 5rem;"></i>
+                        </a>
+                        <a href="/sad" style="padding:15px;">
+                            <i class="bi bi-emoji-frown-fill" style="color: rgb(153, 135, 201); font-size: 5rem;"></i>
+                        </a>
+                    </div>     
+                </div>
+            </div>
+      
+          </div>
+        </div>
+      </div>
 </body>
+
+
 
 </html>
 
@@ -159,7 +166,7 @@
                     i === new Date().getDate() &&
                     date.getMonth() === new Date().getMonth()
                 ) {
-                    days += `<div class="today" id="today">${i}</div>`;
+                    days += `<div class="today" id="today" data-bs-toggle="modal" data-bs-target="#myModal">${i}</div>`;
                     
                 } else {
                     days += `<div>${i}</div>`;
@@ -173,22 +180,23 @@
 
             if (mood == "neutral") {
                 var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(204, 190, 66)";
+                element.style.backgroundColor = "rgb(253, 229, 94)";
             } else if (mood == "happy"){
                 var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(89, 204, 66)";
+                element.style.backgroundColor = "rgb(155, 201, 135)";
             } else if (mood == "mad"){
                 var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(204, 66, 66)";
+                element.style.backgroundColor = "rgb(186, 86, 86)";
             } else if (mood == "sad"){
                 var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(66, 110, 204)";
+                element.style.backgroundColor = "rgb(153, 135, 201)";
             } else if (mood == "cool"){
                 var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(66, 204, 186)";
+                element.style.backgroundColor = "rgb(135, 201, 201)";
             } else {
                 var element = document.getElementById("today");
                 element.style.backgroundColor = "white";
+                element.style. border = "0.4rem solid #7e6e5a"
             }
         };
 
