@@ -34,8 +34,6 @@ module.exports = function (app) {
       });
   });
 
-  app.get("/mood_tracker", function (req, res) {});
-
   app.get("/journal", function (req, res) {
     var userID = 0;
     // variable to check if user has entered their daily journal
@@ -107,12 +105,12 @@ module.exports = function (app) {
         (error) => {
           if (error) {
             console.error(error);
-            res.render("homepage.html");
+            res.redirect("/");
           }
         }
       );
 
-    res.render("homepage.html");
+      res.redirect("journal");
   });
 
   app.post("/editjournalentry", function (req, res) {
@@ -124,7 +122,6 @@ module.exports = function (app) {
       .then((snapshot) => {
         if (snapshot.exists()) {
           let journalDataObj = JSON.parse(JSON.stringify(snapshot.val()));
-          var keys = Object.keys(journalDataObj);
 
           for (let i in journalDataObj) {
             if (journalDataObj[i].dayNum == req.body.dayNum) {
@@ -138,17 +135,17 @@ module.exports = function (app) {
                   dayNum: parseInt(req.body.dayNum),
                 });
 
-              res.render("homepage.html");
+                res.redirect("journal");
             }
           }
         } else {
           console.log("something went wrong");
-          res.render("homepage.html");
+          res.redirect("/");
         }
       })
       .catch((error) => {
         console.error(error);
-        res.render("homepage.html");
+        res.redirect("/");
       });
   });
 
@@ -722,7 +719,7 @@ module.exports = function (app) {
       let year = currentTime.getFullYear(); 
       let currentDate = date + + month + year;
 
-      var userMood = moodRef.child(username).child(currentDate).child("today_mood");
+      /* var userMood = moodRef.child(username).child(currentDate).child("today_mood");
       userMood.once('value') 
       .then((querySnapshot) => {
         //querySnapshot.exists(); -- when query is empty -- false || when query is not empty -- true
@@ -740,10 +737,13 @@ module.exports = function (app) {
                   var today_mood = "empty";
                 }
                 var today_mood = querySnapshot.val().mood;
-                console.log("mood today is " + today_mood);  
+                console.log("mood today is " + today_mood);
+
+                // retrieve all user 
 
                 res.render("mood_tracker.html", {
-                  title: "Dynamic title", today_mood : today_mood
+                  title: "Dynamic title",
+                  today_mood : today_mood
                 });
               });
           } else if (a == false) {
@@ -756,6 +756,44 @@ module.exports = function (app) {
           } else {
             console.log("error adding mood")
           }
+      }); */
+
+      var today_mood = "empty";
+
+      moodRef.child(username).get().then((snapshot) => {
+        if(snapshot.exists()) {
+
+          let moodDataObj = JSON.stringify(snapshot.val());
+          moodDataObj = JSON.parse(moodDataObj);
+
+          var prev_moods = {};
+
+          for(let i in moodDataObj) {
+            
+            if(i != currentDate) {
+              prev_moods[i] = moodDataObj[i].today_mood.mood;
+            }
+            else {
+              var moodObj = moodDataObj[i].today_mood;
+              today_mood = moodObj.mood;
+            }
+          }
+
+          res.render("mood_tracker.html", {
+            title: "Dynamic title", 
+            today_mood : today_mood,
+            prev_moods : prev_moods
+          });
+
+        }
+        else {
+          console.log("no data available");
+          res.redirect("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.redirect("/");
       });
       
       

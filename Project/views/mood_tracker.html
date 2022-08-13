@@ -42,7 +42,7 @@
 
 </br>
 <div>
-    <% console.log(today_mood)%>
+    <!-- <% console.log(today_mood)%> -->
     <span><%= today_mood %></span>
     <div class="card">
         <div class="card-header">
@@ -98,9 +98,33 @@
 </body>
 
 <script>
-    mood = `<%= today_mood %>`;
-    console.log(mood);
+    /* mood = `<%= today_mood %>`;
+    console.log(mood); */
+
+    function highlightMood(id, mood) {
+        if (mood == "neutral") {
+                var element = document.getElementById(id);
+                element.style.backgroundColor = "rgb(204, 190, 66)";
+            } else if (mood == "happy"){
+                var element = document.getElementById(id);
+                element.style.backgroundColor = "rgb(89, 204, 66)";
+            } else if (mood == "mad"){
+                var element = document.getElementById(id);
+                element.style.backgroundColor = "rgb(204, 66, 66)";
+            } else if (mood == "sad"){
+                var element = document.getElementById(id);
+                element.style.backgroundColor = "rgb(66, 110, 204)";
+            } else if (mood == "cool"){
+                var element = document.getElementById(id);
+                element.style.backgroundColor = "rgb(66, 204, 186)";
+            } else {
+                var element = document.getElementById(id);
+                element.style.backgroundColor = "white";
+            }
+    }
+
     const date = new Date();
+
 
         const renderCalendar = () => {
             date.setDate(1);
@@ -162,7 +186,8 @@
                     days += `<div class="today" id="today">${i}</div>`;
                     
                 } else {
-                    days += `<div>${i}</div>`;
+                    var dayId = i.toString() + (date.getMonth() + 1).toString(10) + date.getFullYear();
+                    days += `<div id=${dayId}>${i}</div>`;
                 }
             }
 
@@ -171,24 +196,16 @@
                 monthDays.innerHTML = days;
             }
 
-            if (mood == "neutral") {
-                var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(204, 190, 66)";
-            } else if (mood == "happy"){
-                var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(89, 204, 66)";
-            } else if (mood == "mad"){
-                var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(204, 66, 66)";
-            } else if (mood == "sad"){
-                var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(66, 110, 204)";
-            } else if (mood == "cool"){
-                var element = document.getElementById("today");
-                element.style.backgroundColor = "rgb(66, 204, 186)";
-            } else {
-                var element = document.getElementById("today");
-                element.style.backgroundColor = "white";
+            highlightMood("today", `<%= today_mood %>`);
+
+            var prev_moods = '<%- JSON.stringify(prev_moods)%>';
+            prev_moods = JSON.parse(prev_moods);
+
+            if(prev_moods !== {}) {
+                for(let dateId in prev_moods) {
+                    //alert("Date ID: " + dateId);
+                    highlightMood(dateId, prev_moods[dateId]);
+                }
             }
         };
 

@@ -1,5 +1,5 @@
-const cookieParser = require("cookie-parser");
-const csrf = require("csurf");
+/* const cookieParser = require("cookie-parser");
+const csrf = require("csurf"); */
 const express = require("express");
 const bodyParser = require("body-parser");
 var path = require('path');
@@ -8,10 +8,10 @@ const port = 8089;
 const firebase = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 
-const csrfMiddleware = csrf({ cookie: true });
+/* const csrfMiddleware = csrf({ cookie: true });
 
 app.use(cookieParser());
-app.use(csrfMiddleware);;
+app.use(csrfMiddleware);; */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
