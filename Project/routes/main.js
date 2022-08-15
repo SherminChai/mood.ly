@@ -268,44 +268,46 @@ module.exports = function (app) {
   
   
   app.get("/profile", function (req, res) {
-    var userID = 0;
+        var userID = "tEkSAGudKTNPYDfprPdKWu2WSgH3";
 
-    usersRef
-      .child(userID)
-      .get()
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          console.log(snapshot.val());
+    signupRef.get().then((snapshot) => {
+      if(snapshot.exists()) {
+        let signUpObj = JSON.parse(JSON.stringify(snapshot.val()));
+        var IDvariable;
 
-          var name = snapshot.child("full_name").val();
-          var email = snapshot.child("email").val();
-          var username = snapshot.child("username").val();
-          var password = snapshot.child("password").val();
-          // var age = snapshot.child("age").val();
-          // var educational_level = snapshot.child("educational_level").val();
-          // var gender = snapshot.child("gender").val();
-          // var phone_number = snapshot.child("phone_number").val();
-          // var school = snapshot.child("school").val();
+        for(let profileID in signUpObj) {
+          if(signUpObj[profileID].userID === userID) {
+            IDvariable = profileID;
 
-          res.render("profile.html", {
-            userFullName: name,
-            userEmail: email,
-            userUsername: username,
-            userPassword: password,
-            // userAge: age,
-            // userEducationalLevel: educational_level,
-            // userGender: gender,
-            // userPhoneNumber: phone_number,
-            // userSchool: school
-          });
-        } else {
-          console.log("No data available");
-          res.render("homepage.html");
+            var name = signUpObj[profileID].name;
+            var email = signUpObj[profileID].email;
+            var username = signUpObj[profileID].username;
+            var password = signUpObj[profileID].password;
+            var age = signUpObj[profileID].age;
+            var educational_level = signUpObj[profileID].educational_level;
+            var gender = signUpObj[profileID].gender;
+            var phone_number = signUpObj[profileID].phone_number;
+            var school = signUpObj[profileID].school;
+
+            res.render("profile.html", {
+              userFullName: name,
+              userEmail: email,
+              userUsername: username,
+              userPassword: password,
+              userAge: age,
+              userEducationalLevel: educational_level,
+              userGender: gender,
+              userPhoneNumber: phone_number,
+              userSchool: school
+            });
+          } else {
+            console.log("No users available");
+          }  
         }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
   });
   
   app.get("/topNav", function (req, res) {
