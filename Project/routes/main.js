@@ -150,137 +150,106 @@ module.exports = function (app) {
   });
 
   ///////////////////////////////////////////////////////SIGN IN AND SIGN UP///////////////////////////////////////////////////////////////////////////
-  app.get("/signIn", function (req, res) {
-    res.render("signIn.html");
-  });
+   app.get("/", function (req, res) {
+      res.render("signIn.html"); 
+    });
 
-  //   app.post("/sign_in", function (req, res) {
+    app.get("/mood_tracker", function (req, res) {
+      res.render("mood_tracker.html")
+    });
 
-  //     admin
-  //     .auth()
-  //     .signInWithEmailAndPassword({
-  //      "email" : req.body.email,
-  //      "password" : req.body.password
-  //     })
-  //     .then(function () {
-  //       admin.auth().currentUser.getIdToken(true).then(function(idToken){
-  //              res.send(idToken)
-  //              res.end()
-  //           }).catch(function (error) {
-  //               //Handle error
-  //           });
-  //  }).catch(function (error) {
-  //        //Handle error
-  //  });
-  //     // .then(({ user }) => {
-  //     //   console.log(user);
-  //     //   return user.getIdToken()
-  //     // })
-  //     res.render('profile.html');
+    app.get("/journal", function (req, res) {
+      render("journal.html");
+    });
+    
+    app.get("/signIn", function (req, res) {
+      res.render('signIn.html');
+    });
 
-  //   });
+    //saving sign-up to database
 
-  // app.post('/sign_in', async(req, res) => {
-  //   const {email, password} = req.body;
-  //   admin
-  //   .auth()
-  //   .signInWithEmailAndPassword(email, password)
-  //   .then((userCredential) => {
-  //   var user = userCredential.user;
-  //   })
-  //   .catch((error) => {
-  //   var errorCode = error.code;
-  //   var errorMessage = error.message;
-  //   });
-  //   res.render('profile.html');
-  //   })
+    app.post('/sign_up', function (req, res) {
+    
+      admin
+          .auth()
+          .createUser({
+            "email" : req.body.email,
+            "password" : req.body.password
+          })
+          .then((userData) => {
+            
+            signUpRef.push().set({
+              "userID": userData.uid,
+              "name" : req.body.name,
+              "email" : req.body.email,
+              "password" : req.body.password,
+              "username" : req.body.user_name,
+              "birthday" : req.body.birthday,
+              "gender" : req.body.gender,
+              "phone_number" : req.body.phone_number,
+              "educational_level" : req.body.educational_level,
+              "school" : req.body.school
+          });
 
-  //   app.get("/signUp", function (req, res) {
-  //     res.render("signUp.html");
-  //   });
-
-  //saving sign-up to database
-
-  app.post("/sign_up", function (req, res) {
-    admin
-      .auth()
-      .createUser({
-        email: req.body.email,
-        password: req.body.password,
-      })
-      .then((userData) => {
-        signUpRef.push().set({
-          userID: userData.uid,
-          email: req.body.email,
-          password: req.body.password,
-          username: req.body.user_name,
-          age: req.body.age,
-          gender: req.body.gender,
-          phone_number: req.body.phone_number,
-          educational_level: req.body.educational_level,
-          school: req.body.school,
+        
+        })
+        .catch((error) => {
+            console.log('Error creating userr:',error);
         });
-      })
-      // .then(({ user }) => {
-      //   console.log(user);
-      //   return user.getIdToken()
-      // })
-      .catch((error) => {
-        console.log("Error creating userr:", error);
-      });
-    res.render("signIn.html");
-  });
+        res.render("signIn.html");
+    });
 
-  ////////////////////////////////////////////////SESSION, LOG-IN//////////////////////////////////////////////////////////////////////////////////////////////////////////
-  app.get("/profile", function (req, res) {
-    res.render("profile.html");
-  });
-
-  app.get("/profile", function (req, res) {
-    const sessionCookie = req.cookies.session || "";
-
-    admin
-      .auth()
-      .verifySessionCookie(sessionCookie, true /** checkRevoked */)
-      .then((userData) => {
-        console.log("Logged in:", userData.email);
-        res.render("profile.html");
-      })
-      .catch((error) => {
-        res.redirect("/signIn");
-      });
-  });
-
-  app.get("/", function (req, res) {
-    // res.clearCookie("__session");
-    res.render("index.html");
-  });
-
-  app.post("/sessionLogin", (req, res) => {
-    const idToken = req.body.idToken.toString();
-
-    const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
-    admin
-      .auth()
-      .createSessionCookie(idToken, { expiresIn })
-      .then(
-        (sessionCookie) => {
-          const options = { maxAge: expiresIn, httpOnly: true };
-          res.cookie("session", sessionCookie, options);
-          res.end(JSON.stringify({ status: "success" }));
-        },
-        (error) => {
-          res.status(401).send("UNAUTHORIZED REQUEST!");
-        }
-      );
-  });
-
-  app.get("/sessionLogout", (req, res) => {
-    res.clearCookie("session");
-    res.redirect("/signIn");
-  });
-
+    app.all("*", (req, res, next) => {
+      res.cookie("XSRF-TOKEN");
+      next();
+    });
+    
+    app.get("/profile", function (req, res) {
+      const sessionCookie = req.cookies.session || "";
+    
+      admin
+        .auth()
+        .verifySessionCookie(sessionCookie, true /** checkRevoked */)
+        .then((userData) => {
+          req.cookies.userID = userData.uid;
+          console.log("uid: " + userData.uid);
+          console.log("Test: " + req.cookies.userID);
+          console.log("Logged in:", userData.email)
+          res.render("profile.html");
+        })
+        .catch((error) => {
+          res.redirect("/signIn");
+        });
+    });
+    
+    app.get("/", function (req, res) {
+      res.render("index.html");
+    });
+    
+    app.post("/sessionLogin", (req, res) => {
+      const idToken = req.body.idToken.toString();
+    
+      const expiresIn = 60 * 60 * 24 * 5 * 1000;
+    
+      admin
+        .auth()
+        .createSessionCookie(idToken, { expiresIn })
+        .then((sessionCookie) => {
+            const options = { maxAge: expiresIn, httpOnly: true };
+            res.cookie("session", sessionCookie, options);
+            res.end(JSON.stringify({ status: "success" }));
+          },
+          (error) => {
+            res.status(401).send("UNAUTHORIZED REQUEST!");
+          }
+        );
+    });
+    
+    app.get("/sessionLogout", (req, res) => {
+      res.clearCookie("session");
+      res.redirect("/signIn");
+    });
+  /////////////////////////////////////////////////////// TIPS ///////////////////////////////////////////////////////////////////////////
   app.get("/tips", function (req, res) {
     tipsRef
       .once("value", (snapshot) => {
@@ -296,6 +265,7 @@ module.exports = function (app) {
         console.error(error);
       });
   });
+  
   
   app.get("/profile", function (req, res) {
     var userID = 0;
