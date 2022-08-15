@@ -53,25 +53,30 @@
         <button class="control-button in">Sign In</button>
       </form>
     </div>
+
     <div class="sign-up" id="sign-up-info">
-     
- 
       <form id="sign-up-form" action="/sign_up" method="POST">
-        <div class="sign_up_details" id="first_step">
+  
+        <div class="sign_up_details" class="first_step">
           <h1>Create Account</h1>
-          <!-- <input type="text" placeholder="Name" id="name_sign_up" name="name" oninput="this.className = ''"/> -->
+          <input type="text" placeholder="Full Name" id="name_sign_up" name="name" oninput="this.className = ''"/>
           <input type="email" placeholder="Email" id="email_sign_up" name="email" oninput="this.className = ''"/>
           <input type="password" placeholder="Password" id="password_sign_up" name="password" oninput="this.className = ''"/>
-          <button class="control-button in">Sign up</button>
+          <button type="submit" class="control-button in">Sign up</button>
         </div>
 
         <div class="sign_up_details" id="second_step">
           <input type="text" placeholder="Username" id="user_name" name="user_name" oninput="this.className = ''" />
-          <input type="text" placeholder="Age" id="age" name="age" oninput="this.className = ''"/>
-          <input type="text" placeholder="Gender" id="gender" name="gender" oninput="this.className = ''"/>
-          <input type="text" placeholder="Phone Number" id="phone_number" name="phone_number" oninput="this.className = ''"/>
-          <input type="text" placeholder="Educational Level" id="educational_level" name="educational_level" oninput="this.className = ''"/>
-          <input type="text" placeholder="Name of School" id="school" name="school" oninput="this.className = ''"/>
+          <input type="date" placeholder="Birthday" id="birthday" name="birthday" oninput="this.className = ''"/>
+          <input type="radio" id="gender" name="gender" value="male" oninput="this.className = ''">
+          <label for="male">male</label>
+          <input type="radio" id="gender" name="gender" value="female" oninput="this.className = ''">
+          <label for="female">female</label>
+      
+
+          <input type="tel" placeholder="Phone Number (Optional)" id="phone_number" name="phone_number" oninput="this.className = ''"/>
+          <input type="text" placeholder="Educational Level (Optional)" id="educational_level" name="educational_level" oninput="this.className = ''"/>
+          <input type="text" placeholder="Name of School (Optional)" id="school" name="school" oninput="this.className = ''"/>
         </div>
 
         <div style="overflow:auto;">
@@ -122,14 +127,7 @@
                 .signInWithEmailAndPassword(login, password)
                 .then(({ user }) => {
                   console.log(user);
-                  return user.getIdToken().then(idToken => {
-                  // Session login endpoint is queried and the session cookie is set.
-                  // CSRF protection should be taken into account.
-                  // ...
-                  // const csrfToken = getCookie('csrfToken');
-                  // return postIdTokenToSessionLogin('/sessionLogin', idToken, csrfToken);
-                  // });
-              //     .then((idToken) => {
+                  return user.getIdToken().then((idToken) => {
                     return fetch("/sessionLogin", {
                       method: "POST",
                       headers: {
@@ -146,48 +144,11 @@
                 })
                 .then(() => {
                   window.location.assign("/profile");
-            })
-            // .then(() => {
-            //   window.location.assign("/profile");
-            // })
-            // return false;
+                });
+              return false;
           });
-
         });
-      </script>
-          <!-- //   document
-          // .getElementById("sign-up-form")
-          // .addEventListener("submit", (event) => {
-          //   event.preventDefault();
-          //   const login = event.target.email.value;
-          //   const password = event.target.password.value;
-        
-          //   firebase
-          //     .auth()
-          //     .createUser({email: "user@example.com",password: "123456"})
-          //     .then(({ user }) => {
-          //       return user.getIdToken().then((idToken) => {
-          //         return fetch("/sessionLogin", {
-          //           method: "POST",
-          //           headers: {
-          //             Accept: "application/json",
-          //             "Content-Type": "application/json",
-          //             "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-          //           },
-          //           body: JSON.stringify({ idToken }),
-                    
-          //         });
-          //       });
-          //     })
-          //     .then(() => {
-          //       return firebase.auth().signOut();
-          //     })
-          //     .then(() => {
-          //       window.location.assign("/profile");
-          //     });
-          //   return false;
-          // }); -->
-    
+        </script>
 
 <script src="/js/signIn.js"></script>
     
