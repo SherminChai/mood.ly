@@ -145,7 +145,7 @@ nav button {
   }
 }
 
-/* TIPS CSS */
+/* HOMEPAGE TIPS CSS */
 .heading{
   font-size: 20px;
   font-weight: bold; 
@@ -169,22 +169,23 @@ nav button {
   height: 300px;
   background-color: white;
   border: 5px solid black;
-  padding: 30px;
+  padding: 20px;
   margin-right: 20px;
   border-radius: 30px;
   text-align: center;
 }
 
-.homepage_tips .tipsTitle{
+.homepage_tips .tipsTitle {
   font-size: 25px;
   font-weight: bold;
 }
 
-.homepage_tips .tipsIntro{
-  font-size: 25px;
-  font-weight: bold;
+.homepage_tips img {
+  width: 400px;
+  max-height: 120px;
 }
 
+/* HOMEPAGE FORUM CSS */
 .homepage_forum {
   clear: both;
   display: flex;
@@ -197,8 +198,8 @@ nav button {
 }
 
 .homepage_forum .forum {
-  min-width: 400px;
-  height: 300px;
+  max-width: 500px;
+  height: 250px;
   background-color: white;
   border: 5px solid black;
   padding: 30px;
@@ -207,6 +208,12 @@ nav button {
   text-align: center;
 }
 
+.homepage_forum .forumTitle{
+  font-size: 25px;
+  font-weight: bold;
+}
+
+/* PROFILE CSS */
 .profile_edit {
   border: 2px solid #18a0fb;
   border-radius: 5px;
