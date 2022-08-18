@@ -19,19 +19,16 @@ module.exports = function (app) {
   var tipsRef = firebaseRef.child("tips");
 
   app.get("/", function (req, res) {
-    tipsRef
-      .once("value", (snapshot) => {
-        if (snapshot.exists()) {
-          var tips = snapshot.val();
-          console.log(tips);
-          res.render("homepage.html", { tipsData: tips });
-        } else {
-          console.log("No data available");
-        }
+    var forumListRef = forumRef;
+    var forumList = [];
+    
+    forumListRef.on('value', (data) => {
+      data.forEach(function (snapshot) {
+        forumList.push(snapshot.val());
       })
-      .catch((error) => {
-        console.error(error);
-      });
+    });
+    
+    res.render("homepage.html", { forumItem: forumList });
   });
 
   app.get("/journal", function (req, res) {
@@ -268,7 +265,7 @@ module.exports = function (app) {
   
   
   app.get("/profile", function (req, res) {
-        var userID = "tEkSAGudKTNPYDfprPdKWu2WSgH3";
+    var userID = "tEkSAGudKTNPYDfprPdKWu2WSgH3";
 
     signupRef.get().then((snapshot) => {
       if(snapshot.exists()) {
