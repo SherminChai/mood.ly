@@ -51,21 +51,35 @@
 
     <p class="heading">Tips : Scroll to find more!</p>
     <div class ="homepage_tips">
-        <% if(tipsData.length > 0) { %> <% tipsData.forEach(function(tips){ %>
         <div class="tips">
-            <p class="tipsTitle"><%= tips.title %></p>
-            <p class="'tipsIntro"><%= tips.intro %></p>
+            <img src="/assets/tips_1.jpg">
+            <p class="tipsTitle">10 Essential Tips for Mental Well-Being</p>
+            <p class="'tipsIntro">Learn how your mind affects your physical and emotional health to strengthen your mental well-being.</p>
+            <a href="https://www.healthhub.sg/live-healthy/1926/10-Essentials-for-Mental-Well-Being">Learn more!</a>
         </div>
-        <% }) %> <% } %>
-        
+        <div class="tips">
+            <img src="/assets/tips_2.jpg">
+            <p class="tipsTitle">10 Proven Ways to Achieve Mental Wellness</p>
+            <p class="'tipsIntro">Your mind is the window to your body and soul, so make sure it receives proper nourishment.</p>
+            <a href="https://www.healthxchange.sg/wellness/mental-health/ten-ways-achieve-mental-wellness">Learn more!</a>
+        </div>
+        <div class="tips">
+            <img src="/assets/tips_3.webp">
+            <p class="tipsTitle">7 Essential Tips for Mental Wellness</p>
+            <p class="'tipsIntro">Your mental health not only controls your consciousness but also determines your physical health and the way your body functions.</p>
+            <a href="https://www.rafflesmedicalgroup.com/health-resources/health-articles/7-essential-tips-for-mental-wellness/">Learn more!</a>
+        </div>
     </div>
     <br>
     <p class="heading">Forum : Scroll to find more!</p>
     <div class ="homepage_forum">
-        <div class="forum">
-            <h5>Sed ut perspiciatis</h5>
-            <h6>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia.</h6>
-        </div>
+        <% forumItem.forEach(function(item) { %>
+            <div class="forum">
+                <p class="forumTitle"><%= item.forumTitle %></p>
+                <p class="forumContent"><%= item.forumContent %></p>
+                <a href="forums.html">Forum Page</a>
+            </div>
+        <% }) %>
     </div>
 
 <script src="/js/homepage.js"></script>
