@@ -8,18 +8,15 @@
 <body>
     <header>
         <div class="navbar">
-          <img src="Images/logo.png" class="logo">
           <p>Mood.ly</p>
           <nav>
             <ul>
-              <li><a href="/">Home</a></li>
-              <li><a href="/mood-tracker">Mood Tracker</a></li>
-              <li><a href="/journal">Journal</a></li>
-              <li><a href="/forum">Forum</a></li>
-              <li><a href="/tips">Tips</a></li>
-              <li><a href="/profile">Profile</a></li>  
-              <button class="register">Register</button>
-              <button class="login">Log In</button>
+                <li><a href="/">Home</a></li>
+                <li><a href="/mood_tracker">Mood Tracker</a></li>
+                <li><a href="/journal">Journal</a></li>
+                <li><a href="/forum">Forum</a></li>
+                <li><a href="/tips">Tips</a></li>
+                <li><a href="/profile">Profile</a></li>
             </ul>
           </nav>
         </div>
@@ -27,51 +24,34 @@
  
     <div class="homepage_carousel">
         <div class="mySlides fade">
-            <img src="/assets/quote.1.png">
+            <img src="/assets/carousel_1.jpg">
+            <p class="tipsTitle">10 Essential Tips for Mental Well-Being</p>
+            <div class="readButton">
+                <a href="https://www.healthhub.sg/live-healthy/1926/10-Essentials-for-Mental-Well-Being">Read more!</a>
+            </div>
         </div>
-        
         <div class="mySlides fade">
-            <img src="/assets/quote.2.png">
+            <img src="/assets/carousel_2.jpg">
+            <p class="tipsTitle">10 Proven Ways to Achieve Mental Wellness</p>
+            <div class="readButton">
+                <a href="https://www.healthxchange.sg/wellness/mental-health/ten-ways-achieve-mental-wellness">Read more!</a>
+            </div>
+            
         </div>
-        
         <div class="mySlides fade">
-            <img src="/assets/quote.3.png">
+            <img src="/assets/carousel_3.png">
+            <p class="tipsTitle">7 Essential Tips for Mental Wellness</p>
+            <div class="readButton">
+                <a href="https://www.rafflesmedicalgroup.com/health-resources/health-articles/7-essential-tips-for-mental-wellness/">Read more!</a>
+            </div>
         </div>
-
-        <div class="mySlides fade">
-            <img src="/assets/hotline.1.png">
-        </div>
-        <br>
         <div style="text-align: center">
             <span class="dot"></span> 
             <span class="dot"></span> 
             <span class="dot"></span>
-            <span class="dot"></span>
         </div>
     </div>
-
-    <p class="heading">Tips : Scroll to find more!</p>
-    <div class ="homepage_tips">
-        <div class="tips">
-            <img src="/assets/tips_1.jpg">
-            <p class="tipsTitle">10 Essential Tips for Mental Well-Being</p>
-            <p class="'tipsIntro">Learn how your mind affects your physical and emotional health to strengthen your mental well-being.</p>
-            <a href="https://www.healthhub.sg/live-healthy/1926/10-Essentials-for-Mental-Well-Being">Learn more!</a>
-        </div>
-        <div class="tips">
-            <img src="/assets/tips_2.jpg">
-            <p class="tipsTitle">10 Proven Ways to Achieve Mental Wellness</p>
-            <p class="'tipsIntro">Your mind is the window to your body and soul, so make sure it receives proper nourishment.</p>
-            <a href="https://www.healthxchange.sg/wellness/mental-health/ten-ways-achieve-mental-wellness">Learn more!</a>
-        </div>
-        <div class="tips">
-            <img src="/assets/tips_3.webp">
-            <p class="tipsTitle">7 Essential Tips for Mental Wellness</p>
-            <p class="'tipsIntro">Your mental health not only controls your consciousness but also determines your physical health and the way your body functions.</p>
-            <a href="https://www.rafflesmedicalgroup.com/health-resources/health-articles/7-essential-tips-for-mental-wellness/">Learn more!</a>
-        </div>
-    </div>
-    <br>
+    
     <p class="heading">Forum : Scroll to find more!</p>
     <div class ="homepage_forum">
         <% forumItem.forEach(function(item) { %>
