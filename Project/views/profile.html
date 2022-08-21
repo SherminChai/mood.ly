@@ -8,27 +8,25 @@
   <body>
     <header>
       <div class="navbar">
-        <!-- <img src="Images/logo.png" class="logo" /> -->
         <p>Mood.ly</p>
         <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="mood-tracker.html">Mood Tracker</a></li>
-            <li><a href="journal.html">Journal</a></li>
-            <li><a href="forums.html">Forum</a></li>
-            <li><a href="tips.html">Tips</a></li>
-            <button class="register">Register</button>
-            <button class="login">Log In</button>
+            <li><a href="/">Home</a></li>
+            <li><a href="/mood-tracker.html">Mood Tracker</a></li>
+            <li><a href="/journal.html">Journal</a></li>
+            <li><a href="/forum.html">Forum</a></li>
+            <li><a href="/tips.html">Tips</a></li>
+            <li><a href="/profile.html">Profile</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <button class="profile_edit">Edit Profile</button>
-
     <div class="profile">
       <img src="/assets/proimg.png" />
       <p><%= userUsername %></p>
+      <button class="profile_edit">Edit Profile</button>
+      <button class="log_out">Log Out</button>
     </div>
 
     <div class="profile_particulars">
@@ -39,10 +37,6 @@
       <div class="particular">
         <p class="field_name">Name :</p>
         <p class="field_input"><%= userFullName %></p>
-      </div>
-      <div class="particular">
-        <p class="field_name">Age :</p>
-        <p class="field_input"><%= userAge %></p>
       </div>
       <div class="particular">
         <p class="field_name">Gender :</p>
@@ -65,6 +59,6 @@
         <p class="field_input"><%= userSchool %></p>
       </div>
     </div>
-    <a href="/sessionLogout">Log out</a>
+<!--     <a href="/sessionLogout">Log out</a> -->
   </body>
 </html>
