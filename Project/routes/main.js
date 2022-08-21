@@ -267,7 +267,7 @@ module.exports = function (app) {
   app.get("/profile", function (req, res) {
     var userID = "OWxdOwor1YMJWlzdnFbF6V1O9FF3";
 
-    signupRef.get().then((snapshot) => {
+    signUpRef.get().then((snapshot) => {
       if(snapshot.exists()) {
         let signUpObj = JSON.parse(JSON.stringify(snapshot.val()));
         var IDvariable;
