@@ -265,7 +265,7 @@ module.exports = function (app) {
   
   
   app.get("/profile", function (req, res) {
-    var userID = "tEkSAGudKTNPYDfprPdKWu2WSgH3";
+    var userID = "OWxdOwor1YMJWlzdnFbF6V1O9FF3";
 
     signupRef.get().then((snapshot) => {
       if(snapshot.exists()) {
@@ -280,7 +280,6 @@ module.exports = function (app) {
             var email = signUpObj[profileID].email;
             var username = signUpObj[profileID].username;
             var password = signUpObj[profileID].password;
-            var age = signUpObj[profileID].age;
             var educational_level = signUpObj[profileID].educational_level;
             var gender = signUpObj[profileID].gender;
             var phone_number = signUpObj[profileID].phone_number;
@@ -291,7 +290,6 @@ module.exports = function (app) {
               userEmail: email,
               userUsername: username,
               userPassword: password,
-              userAge: age,
               userEducationalLevel: educational_level,
               userGender: gender,
               userPhoneNumber: phone_number,
