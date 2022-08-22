@@ -11,17 +11,18 @@
 <body>
 
 
-
-<div class="logo" id="myLogo">
-    <h2>Mood.ly</h2>   
-</div> 
+<a href="/views/homepage.html">
+  <div class="logo" id="myLogo">
+      <h2>Mood.ly</h2>   
+  </div> 
+</a>
 
 <div class="topnav" id="myTopnav">
-    <a href="#Profile">Profile</a>
-    <a href="#Tips">Tips</a>
-    <a href="#Forum">Forum</a>
-    <a href="#Journal">Journal</a>
-    <a href="#Mood Tracker" class="active">Mood Tracker</a>
+    <a href="/views/profile.html">Profile</a>
+    <a href="/views/tips.html">Tips</a>
+    <a href="/views/forum.html">Forum</a>
+    <a href="/views/journal.html">Journal</a>
+    <a href="/views/mood_tracker.html" class="active">Mood Tracker</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
@@ -49,35 +50,45 @@
       <form id="sign-in-form" action="/sign_in" method="POST">    
         <input type="email" placeholder="Email" id="email_sign_in" name="email"/>
         <input type="password" placeholder="Password" id="password_sign_in" name="password"/>
-        <p class="forgot-password">Forgot your password?</p>
+        <% if(locals.err) { %>
+          <div class = "alert alert-danger" role="alert"><%=err %></div>
+        <% } %>
+     
         <button class="control-button in">Sign In</button>
       </form>
     </div>
 
+   
+
     <div class="sign-up" id="sign-up-info">
       <form id="sign-up-form" action="/sign_up" method="POST">
-  
+
         <div class="sign_up_details" class="first_step">
+      
           <h1>Create Account</h1>
+
+          <% if(locals.err) { %>
+            <div class = "alert alert-danger" role="alert"><%=err %></div>
+          <% } %>
+
           <input type="text" placeholder="Full Name" id="name_sign_up" name="name" oninput="this.className = ''"/>
           <input type="email" placeholder="Email" id="email_sign_up" name="email" oninput="this.className = ''"/>
           <input type="password" placeholder="Password" id="password_sign_up" name="password" oninput="this.className = ''"/>
-          <button type="submit" class="control-button in">Sign up</button>
         </div>
 
         <div class="sign_up_details" id="second_step">
-          <input type="text" placeholder="Username" id="user_name" name="user_name" oninput="this.className = ''" />
+          <input type="text" placeholder="Username" id="user_name" name="user_name" oninput="this.className = ''"/>
           <input type="date" placeholder="Birthday" id="birthday" name="birthday" oninput="this.className = ''"/>
-          <input type="radio" id="gender" name="gender" value="male" oninput="this.className = ''">
+          <input type="radio" id="gender_male" name="gender" value="male" oninput="this.className = ''">
           <label for="male">male</label>
-          <input type="radio" id="gender" name="gender" value="female" oninput="this.className = ''">
+          <input type="radio" id="gender_female" name="gender" value="female" oninput="this.className = ''">
           <label for="female">female</label>
-      
-
+    
           <input type="tel" placeholder="Phone Number (Optional)" id="phone_number" name="phone_number" oninput="this.className = ''"/>
+          <small></small>
           <input type="text" placeholder="Educational Level (Optional)" id="educational_level" name="educational_level" oninput="this.className = ''"/>
           <input type="text" placeholder="Name of School (Optional)" id="school" name="school" oninput="this.className = ''"/>
-        </div>
+        </div>        
 
         <div style="overflow:auto;">
           <div style="float:right;">
@@ -139,12 +150,14 @@
                     });
                   });
                 })
+
                 .then(() => {
                   return firebase.auth().signOut();
                 })
                 .then(() => {
                   window.location.assign("/profile");
                 });
+         
               return false;
           });
         });

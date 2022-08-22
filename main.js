@@ -9,7 +9,15 @@ module.exports = function (app) {
     app.use(cookieParser());
 
     app.get("/", function (req, res) {
-      res.render("signIn.html"); 
+      res.render("welcomepage.html"); 
+    });
+
+    app.get("/welcomepage", function (req, res) {
+      res.render("welcomepage.html")
+    });
+
+    app.get("/homepage", function (req, res) {
+      res.render("homepage.html")
     });
 
     app.get("/mood_tracker", function (req, res) {
@@ -17,11 +25,15 @@ module.exports = function (app) {
     });
 
     app.get("/journal", function (req, res) {
-      render("journal.html");
+      res.render("journal.html");
     });
     
     app.get("/signIn", function (req, res) {
       res.render('signIn.html');
+    });
+
+    app.post("/signIn", function(req,res){
+      res.render("signIn.html");
     });
 
     //saving sign-up to database
@@ -36,7 +48,7 @@ module.exports = function (app) {
           })
           .then((userData) => {
             
-            signUpRef.push().set({
+           signUpRef.push().set({
               "userID": userData.uid,
               "name" : req.body.name,
               "email" : req.body.email,
@@ -47,14 +59,19 @@ module.exports = function (app) {
               "phone_number" : req.body.phone_number,
               "educational_level" : req.body.educational_level,
               "school" : req.body.school
+             
           });
-
-        
+          res.render("signIn.html");
         })
         .catch((error) => {
-            console.log('Error creating userr:',error);
+            // console.log('Error creating userr:',error);
+            var errorCode = error.code;
+            var err = error.message;
+            console.log(errorCode)
+            console.log(err)
+            res.send({err: err });
         });
-        res.render("signIn.html");
+      
     });
 
     app.all("*", (req, res, next) => {
@@ -72,7 +89,7 @@ module.exports = function (app) {
           req.cookies.userID = userData.uid;
           console.log("uid: " + userData.uid);
           console.log("Test: " + req.cookies.userID);
-          console.log("Logged in:", userData.email)
+          console.log("Logged in:", userData.email);
           res.render("profile.html");
         })
         .catch((error) => {
@@ -84,7 +101,7 @@ module.exports = function (app) {
       res.render("index.html");
     });
     
-    app.post("/sessionLogin", (req, res) => {
+    app.post("/sessionLogin", (req, res,next) => {
       const idToken = req.body.idToken.toString();
     
       const expiresIn = 60 * 60 * 24 * 5 * 1000;
@@ -97,10 +114,10 @@ module.exports = function (app) {
             res.cookie("session", sessionCookie, options);
             res.end(JSON.stringify({ status: "success" }));
           },
-          (error) => {
-            res.status(401).send("UNAUTHORIZED REQUEST!");
-          }
-        );
+          // (error) => {
+          //   res.status(401).send("UNAUTHORIZED REQUEST!");
+          // }
+          )
     });
     
     app.get("/sessionLogout", (req, res) => {
